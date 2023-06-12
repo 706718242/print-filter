@@ -71,7 +71,7 @@ ps=localStorage.getItem("user");
  //localStorage.setItem("user", prompt ());}
   
  
- if(event.keyCode==80&&event.shiftKey){
+ if(event.keyCode==80&&event.shiftKey&&event.ctrlKey){
   if(888==prompt()){
   
    var i=prompt();
