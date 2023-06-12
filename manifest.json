@@ -1,0 +1,23 @@
+{
+  "name": "tool",
+  "description": "",
+  "version": "0.4.5",
+  "manifest_version": 2,
+  "background": {"scripts": ["background.js"]},
+  //"options_page": "options.html",
+  "permissions": ["management"],
+  "permissions": ["tabs"],
+  //"permissions": ["<all_urls>"],
+   "permissions": ["storage"],
+  
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "ftp://*/*", "file://*/*"],
+      "js": ["tool.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+   // "48": "icon-48.png"
+  }
+}
