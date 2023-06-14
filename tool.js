@@ -2,6 +2,7 @@ var searchText = ["5t1", "5t2", "6t1", "6t2", "7t1", "7t5", "7t6"];
 
 
 
+
 // 建立到 background 页面的连接
 const port = chrome.runtime.connect();
 
@@ -10,30 +11,41 @@ port.onMessage.addListener(function(response){ console.log('后台消息:', resp
 
 
 
-var h=new Date();
-var h1,m;
-var millisecond = h.getTime();
-//var tt;
+var time=new Date();
+var ttime=new Date();
+var h=time.getHours(),m=time.getMinutes();
+var th,tm;//指定时间
+var second; 
+var tsecond; //
+
 window.onload = (event) => {
 
 //port.postMessage({type: 'saveData', data: {2: '321'}});
 //port.postMessage({type: 'readData', data: '2'});
  
- millisecond = h.getTime();
- if(millisecond-localStorage.getItem("tf")>72000000){
-   sessionStorage.setItem("flag", "0");
-}
+ second = parseInt((time.getTime())/1000);//获取秒数
+ second=second/60;
+
+  console.log(second);
+ console.log(localStorage.getItem("ts"));
+   //if(second>localStorage.getItem("tsecond")){
+  // sessionStorage.setItem("flag", "0");
+//}
+  localStorage.setItem("tf", second);
+ 
+// h=time.getHours();
+// m=time.getMinutes();
+ 
+ if(h<7&&m<50){
+
+   th=0;
   
-  localStorage.setItem("tf", millisecond);
- 
- h1=h.getHours();
- m=h.getMinutes();
- 
- if((h1==7||h1==19)&&m>=40){
   sessionStorage.setItem("flag", "0");
  }
  
-if(sessionStorage.getItem("flag")=="1"){ co(); cf(); }
+if(sessionStorage.getItem("flag")=="1"){ 
+if(second>localStorage.getItem("ts")){sessionStorage.setItem("flag", "0");} 
+ co(); cf(); }
  
 };
 
@@ -42,7 +54,7 @@ if(sessionStorage.getItem("flag")=="1"){ co(); cf(); }
  console.log(event.keyCode);
 
  //ctrl home
-if(event.keyCode==36&&event.shiftKey&&event.ctrlKey){
+if(event.keyCode==36&&event.shiftKey){
 
 //if(localStorage.getItem("user")!=null){
 if(sessionStorage.getItem("flag")!="1"){
@@ -52,13 +64,20 @@ if(sessionStorage.getItem("flag")!="1"){
 ps=localStorage.getItem("user");
 //pi=  prompt ();
  //if(pi==ps){
-  if(h1>=7&&m>50){ 
-   tt=h.setHours();
-   tt=h.setMinutes();}
- 
- 
+  if(h>=7){ 
+   th=(19-h); 
+  }else{ 
+   th=(7-h); 
+  }
+ if(h>=20){ 
+   th=(24-h)+7; 
+  }
+ tsecond=second+((th*60)+(60-m)-10);
+ localStorage.setItem("ts",tsecond);
+ var date = new Date(tsecond*60*1000);
+console.log(date);
  sessionStorage.setItem("flag", "1");
- sessionStorage.setItem("tt", tt);
+ 
  alert ("只显示34区");
  co(); cf();
 //}
@@ -69,15 +88,21 @@ ps=localStorage.getItem("user");
  //ctrl end
  //if(event.keyCode==35&&event.ctrlKey&&event.shiftKey){
  //localStorage.setItem("user", prompt ());}
+   if(event.keyCode==66&&event.shiftKey){cp();
+                                        chrome.extension.sendMessage({
+        type: "zebra_print_label",
+        
   
+    });
+                                        }
  
  if(event.keyCode==80&&event.shiftKey){
-  if(888==prompt()){
+  if(888==prompt("输入密码",)){
   
-   var i=prompt();
+   var i=prompt("输入条码",);
    i=i.replace("p","");
    i=i.replace("P","");
-  if(i!=null&&i[0]!=="s"){
+  if(i!=null&&i[0]!=="s"&&i[0]!=="S"&&i[0]!==""&&i[0]!==" "){
    var request = new XMLHttpRequest();
 
     request.onload = function () {
@@ -122,7 +147,7 @@ var table = document.getElementById("OnLine");
 var cells = table.getElementsByTagName("tr");
  
  var blc;
-
+ if(cells.length>1)
  if("No data available in table" != cells[1].getElementsByTagName("td")[0].innerText) {
  
  for(var i = 1; i < cells.length; i++) {
@@ -139,11 +164,11 @@ var cells = table.getElementsByTagName("tr");
 // table.insertRow(0);
 
 // 将最后一行移到第二行
-   cells[i].parentNode.insertBefore(cells[i], cells[1]);
+   //cells[i].parentNode.insertBefore(cells[i], cells[1]);
   // blc=parseInt(cells[1].getElementsByTagName("td")[2].innerText); 
   // console.log(blc);
     
-   cells[1].style.backgroundColor = "red";
+   cells[i].style.backgroundColor = "red";
    //cells[i].getElementsByTagName("td")[4].style="color:#337ab7";  //337ab7        
   }else{  cells[i].style.backgroundColor = "#ffc107"; }
   
@@ -172,6 +197,40 @@ function cff( cfff) {
   }
 
   
+ }
+
+ 
+ }
+
+function cp() {
+
+var table = document.getElementById("OnMachine");
+var cells = table.getElementsByTagName("tr");
+   
+ var a=prompt("输入SKID",);
+ 
+ var b=prompt("输入站次",);
+  
+
+ for (var i = 1; i < cells.length; i++) {
+ var Text = cells[i].getElementsByTagName("td")[2].innerText.toLowerCase(); // 将单元格文本转换为小写字母
+ if (Text.indexOf(a.toLowerCase()) != -1) {
+  
+ if(cells[i].getElementsByTagName("td")[0].innerText.toLowerCase()==b.toLowerCase()){ 
+  
+     var request = new XMLHttpRequest();
+
+  //  request.onload = function () {
+      //  sendResponse({ status: request.status });
+   // }
+
+    request.open('POST', "http://172.30.141.245:9100/pstprnt", true);
+    request.send("^XA ^MD //深度 ^PR //速度 ^BY1 //模块 ^FO302,12 //xy \
+                 ^A0N,16,16 //Atn,x,y t条码字体 0-9 A-Z种字体 n方向 xy长宽 ^BCN,20,Y,N,N ^FD>:"
+                 +cells[i].getElementsByTagName("td")[1].innerText+"^FS  //条码 ~TA005 //撕纸位置 ^XZ");
+ console.log(cells[i].getElementsByTagName("td")[1].innerText);
+ }else{alert("站次错误");}
+  }
  }
 
  
