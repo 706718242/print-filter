@@ -1,6 +1,8 @@
-var searchText = ["5t1", "5t2", "6t1", "6t2", "7t1", "7t5", "7t6"];
-
-
+//var searchText = ["1t1", "1t2", "2t1","2t2","3t1","3t2","4t1"];//23a-3-4
+//var searchText = ["1t3", "1t4", "2t3","2t4","3t3","3t4"];//23c-1-2
+var searchText = ["5t1", "5t2", "6t1", "6t2", "7t1", "7t5", "7t6"];//23b-3-4
+//var http="172.30.141.220";//23a-3-4
+var http="172.30.141.245";//23b-3-4
 
 
 // 建立到 background 页面的连接
@@ -109,7 +111,7 @@ console.log(date);
         sendResponse({ status: request.status });
     }
 
-    request.open('POST', "http://172.30.141.245:9100/pstprnt", true);
+    request.open('POST', "http://"+http+":9100/pstprnt", true);
     request.send("^XA ^MD //深度 ^PR //速度 ^BY1 //模块 ^FO302,12 //xy \
                  ^A0N,16,16 //Atn,x,y t条码字体 0-9 A-Z种字体 n方向 xy长宽 ^BCN,20,Y,N,N ^FD>:"
                  +i+"^FS  //条码 ~TA005 //撕纸位置 ^XZ");
@@ -224,7 +226,7 @@ var cells = table.getElementsByTagName("tr");
       //  sendResponse({ status: request.status });
    // }
 
-    request.open('POST', "http://172.30.141.245:9100/pstprnt", true);
+    request.open('POST', "http://"+http+":9100/pstprnt", true);
     request.send("^XA ^MD //深度 ^PR //速度 ^BY1 //模块 ^FO302,12 //xy \
                  ^A0N,16,16 //Atn,x,y t条码字体 0-9 A-Z种字体 n方向 xy长宽 ^BCN,20,Y,N,N ^FD>:"
                  +cells[i].getElementsByTagName("td")[1].innerText+"^FS  //条码 ~TA005 //撕纸位置 ^XZ");
