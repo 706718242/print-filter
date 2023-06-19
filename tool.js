@@ -258,34 +258,30 @@ var cells = table.getElementsByTagName("tr");
 
  
  }
-
 function cr()
 {
 var table = document.getElementById("OnMachine");
 var cells = table.getElementsByTagName("tr");                                       
-var max = Number.NEGATIVE_INFINITY;           // 第一列最大值的初始值 
-var min = Number.POSITIVE_INFINITY;           // 第二列最小值的初始值 
-var index = -1;                              // 记录最终结果所在的行号  
+var max = 0;           
+var min = 0;          
+var index = 0;                              // 记录最终结果所在的行号  
 
 for (var i = 1; i < cells.length; i++) {     
 
-var col1 = Number(cells[i].getElementsByTagName("td")[3].textContent);  // 第一列单元格文本内容转为数字    
-var col2 = Number(cells[i].getElementsByTagName("td")[5].textContent);  // 第二列单元格文本内容转为数字             
-if (col1 > max && col2 < min) {                                                   
+var col1 = Number(cells[i].getElementsByTagName("td")[3].textContent);   
+var col2 = Number(cells[i].getElementsByTagName("td")[5].textContent);             
+if (col1 > max) {                                                   
 max = col1;         
-min = col2;                
-index = i;                                                              
+   if(col2==1){index = i; }            
+                                                             
   } 
 } 
 
-console.log("第一列最大值为：" + max + "，第二列最小值为：" + min + "，在第" + (index + 1) +"行");
-var r1 = Number(cells[index+1].getElementsByTagName("td")[3].textContent);  
-var r2 = Number(cells[index+1].getElementsByTagName("td")[4].textContent);  
-var r3 = Number(cells[index+1].getElementsByTagName("td")[5].textContent);  
+console.log("第一列最大值为：" + max + "，在第" + (index) +"行");
+var r1 = Number(cells[index].getElementsByTagName("td")[3].textContent);  
+var r2 = Number(cells[index].getElementsByTagName("td")[4].textContent);  
+var r3 = Number(cells[index].getElementsByTagName("td")[5].textContent);  
 // console.log("已完成：" +(r1-r2));
 var r4=(r1-r2)*r3;
- alert("已完成：" +r4+"剩余：" +(localStorage.getItem("cr")-r4));
+ alert("总数："+localStorage.getItem("cr") +"\n已完成：" +r4+"\n剩余：" +(localStorage.getItem("cr")-r4));
 }
-
- 
- }
