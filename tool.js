@@ -1,9 +1,11 @@
+var searchText = ["1t3", "1t4", "2t3","2t4","3t3","3t4"];//23a-1-2
 //var searchText = ["1t1", "1t2", "2t1","2t2","3t1","3t2","4t1"];//23a-3-4
-//var searchText = ["1t3", "1t4", "2t3","2t4","3t3","3t4"];//23c-1-2
-var searchText = ["5t1", "5t2", "6t1", "6t2", "7t1", "7t5", "7t6"];//23b-3-4
-//var http="172.30.141.220";//23a-3-4
-var http="172.30.141.245";//23b-3-4
 
+//var searchText = ["1t3", "1t4", "2t3","2t4","3t3","3t4"];//23c-1-2
+//var searchText = ["5t1", "5t2", "6t1", "6t2", "7t1", "7t5", "7t6"];//23b-3-4
+//var http="172.30.141.220";//23a-3-4
+//var http="172.30.141.245";//23b-3-4
+var http="172.30.141.195";//23a-12
 
 // 建立到 background 页面的连接
 const port = chrome.runtime.connect();
@@ -258,6 +260,7 @@ var cells = table.getElementsByTagName("tr");
 
  
  }
+
 function cr()
 {
 var table = document.getElementById("OnMachine");
