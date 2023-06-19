@@ -277,7 +277,7 @@ max = col1;
   } 
 } 
 
-console.log("第一列最大值为：" + max + "，在第" + (index) +"行");
+console.log("最大数量：" + cells[index].innerText);
 var r1 = Number(cells[index].getElementsByTagName("td")[3].textContent);  
 var r2 = Number(cells[index].getElementsByTagName("td")[4].textContent);  
 var r3 = Number(cells[index].getElementsByTagName("td")[5].textContent);  
