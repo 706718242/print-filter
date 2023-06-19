@@ -27,9 +27,9 @@ window.onload = (event) => {
  
  second = parseInt((time.getTime())/1000);//获取秒数
  second=second/60;
+ var date = new Date(second*60*1000);
+  console.log(date);
 
-  console.log(second);
- console.log(localStorage.getItem("ts"));
    //if(second>localStorage.getItem("tsecond")){
   // sessionStorage.setItem("flag", "0");
 //}
@@ -38,16 +38,23 @@ window.onload = (event) => {
 // h=time.getHours();
 // m=time.getMinutes();
  
- if(h<7&&m<50){
+ //if(h<7&&m<50){
 
-   th=0;
+   //th=0;
   
-  sessionStorage.setItem("flag", "0");
- }
- 
+  //sessionStorage.setItem("flag", "0");
+ //}
+   var date3 = new Date(localStorage.getItem("st")*60*1000);
+  console.log("开始"+date3);
+  var date1 = new Date(localStorage.getItem("ts")*60*1000);
+console.log("结束"+date1);
+ console.log("剩余"+parseInt((date1-date)/1000/60)+"分钟");
 if(sessionStorage.getItem("flag")=="1"){ 
 if(second>localStorage.getItem("ts")){sessionStorage.setItem("flag", "0");} 
- co(); cf(); }
+ co(); 
+ cf();
+ 
+}
  
 };
 
@@ -74,19 +81,33 @@ ps=localStorage.getItem("user");
  if(h>=20){ 
    th=(24-h)+7; 
   }
- tsecond=second+((th*60)+(60-m)-10);
+ tsecond=second+((th*60)+(60-m)-15);
  localStorage.setItem("ts",tsecond);
+ localStorage.setItem("st",second);
  var date = new Date(tsecond*60*1000);
 console.log(date);
  sessionStorage.setItem("flag", "1");
  
- alert ("只显示34区");
+ alert ("只显示当前区");
  co(); cf();
 //}
  
 }else{ sessionStorage.setItem("flag", "0"); alert ("显示所有区");}
 //}else{ alert ("未设置账号");}
  }
+
+  if(event.keyCode==88&&event.shiftKey){
+   var crr=prompt("输入总数");
+   if(crr!=null){
+localStorage.setItem("cr",crr);}
+
+}
+if(event.keyCode==67&&event.shiftKey){
+cr();
+
+}
+
+  
  //ctrl end
  //if(event.keyCode==35&&event.ctrlKey&&event.shiftKey){
  //localStorage.setItem("user", prompt ());}
@@ -182,7 +203,7 @@ function cff( cfff) {
  var table = document.getElementById("OnMachine");
  var cells = table.getElementsByTagName("tr");
  a=0;b=0;c=0;
- 
+ let x = Math.max(5, 10);
  var aa,bb;
  for (var i = 1; i < cells.length; i++) {
  var Text = cells[i].getElementsByTagName("td")[0].innerText; 
@@ -234,6 +255,37 @@ var cells = table.getElementsByTagName("tr");
  }else{alert("站次错误");}
   }
  }
+
+ 
+ }
+
+function cr()
+{
+var table = document.getElementById("OnMachine");
+var cells = table.getElementsByTagName("tr");                                       
+var max = Number.NEGATIVE_INFINITY;           // 第一列最大值的初始值 
+var min = Number.POSITIVE_INFINITY;           // 第二列最小值的初始值 
+var index = -1;                              // 记录最终结果所在的行号  
+
+for (var i = 1; i < cells.length; i++) {     
+
+var col1 = Number(cells[i].getElementsByTagName("td")[3].textContent);  // 第一列单元格文本内容转为数字    
+var col2 = Number(cells[i].getElementsByTagName("td")[5].textContent);  // 第二列单元格文本内容转为数字             
+if (col1 > max && col2 < min) {                                                   
+max = col1;         
+min = col2;                
+index = i;                                                              
+  } 
+} 
+
+console.log("第一列最大值为：" + max + "，第二列最小值为：" + min + "，在第" + (index + 1) +"行");
+var r1 = Number(cells[index+1].getElementsByTagName("td")[3].textContent);  
+var r2 = Number(cells[index+1].getElementsByTagName("td")[4].textContent);  
+var r3 = Number(cells[index+1].getElementsByTagName("td")[5].textContent);  
+// console.log("已完成：" +(r1-r2));
+var r4=(r1-r2)*r3;
+ alert("已完成：" +r4+"剩余：" +(localStorage.getItem("cr")-r4));
+}
 
  
  }
