@@ -98,13 +98,8 @@ console.log(date);
 //}else{ alert ("未设置账号");}
  }
 
-  if(event.keyCode==88&&event.shiftKey){
-   var crr=prompt("输入总数");
-   if(crr!=null){
-localStorage.setItem("cr",crr);}
-
-}
-if(event.keyCode==67&&event.shiftKey){
+ 
+if(event.keyCode==35&&event.shiftKey){
 cr();
 
 }
@@ -113,13 +108,7 @@ cr();
  //ctrl end
  //if(event.keyCode==35&&event.ctrlKey&&event.shiftKey){
  //localStorage.setItem("user", prompt ());}
-   if(event.keyCode==66&&event.shiftKey){cp();
-                                        chrome.extension.sendMessage({
-        type: "zebra_print_label",
-        
-  
-    });
-                                        }
+
  
  if(event.keyCode==80&&event.shiftKey){
   if(888==prompt("输入密码",)){
@@ -170,36 +159,61 @@ var t=0;//找到次数
 function cf() {
 var table = document.getElementById("OnLine");
 var cells = table.getElementsByTagName("tr");
- 
+var i=[],j=[]; 
  var blc;
  if(cells.length>1)
  if("No data available in table" != cells[1].getElementsByTagName("td")[0].innerText) {
  
- for(var i = 1; i < cells.length; i++) {
- cfd[i] = cells[i].getElementsByTagName("td")[0].innerText; 
- 
+  for(var i =1 ;i<cells.length; i++) {
+
+ cfd[i] = cells[i].getElementsByTagName("td")[0].innerText;
  cff(cfd[i]);
 
   if(c<0.9){ 
  
-// table.insertRow(0).innnrHTML = cells[i].innnrHTML;
+//table.insertRow(0).innnrHTML = cells[i].innnrHTML;
   
  // table.deleteRow(i);
   
 // table.insertRow(0);
-
+//cells[i].parentNode.insertBefore(cells[i], cells[1]);
 // 将最后一行移到第二行
-   //cells[i].parentNode.insertBefore(cells[i], cells[1]);
+  // cells[i].parentNode.insertBefore(cells[i], cells[1]);
+   //i++;
   // blc=parseInt(cells[1].getElementsByTagName("td")[2].innerText); 
   // console.log(blc);
     
    cells[i].style.backgroundColor = "red";
+   i[i]=cells[i].innnrHTML;
    //cells[i].getElementsByTagName("td")[4].style="color:#337ab7";  //337ab7        
-  }else{  cells[i].style.backgroundColor = "#ffc107"; }
+  }else{ cells[i].style.backgroundColor = "#ffc107"; j[i]=cells[i].innnrHTML; }
   
  }
+
+  for(var i =1 ;i<cells.length; i++) {
+
+ 
+//table.insertRow(0).innnrHTML = cells[i].innnrHTML;
+  
+ table.deleteRow(i);
+  
+ table.insertRow(-1);
+   cells[i].innnrHTML=i[i];
+//cells[i].parentNode.insertBefore(cells[i], cells[1]);
+// 将最后一行移到第二行
+  // cells[i].parentNode.insertBefore(cells[i], cells[1]);
+   //i++;
+  // blc=parseInt(cells[1].getElementsByTagName("td")[2].innerText); 
+  
+   //i[i]=cells[i].innnrHTML;
+  //j[i]=cells[i].innnrHTML; 
+  }
+  
  }
+  
+  
  }
+ 
 
 function cff( cfff) {
  var table = document.getElementById("OnMachine");
@@ -286,5 +300,8 @@ var r2 = Number(cells[index].getElementsByTagName("td")[4].textContent);
 var r3 = Number(cells[index].getElementsByTagName("td")[5].textContent);  
 // console.log("已完成：" +(r1-r2));
 var r4=(r1-r2)*r3;
- alert("总数："+localStorage.getItem("cr") +"\n已完成：" +r4+"\n剩余：" +(localStorage.getItem("cr")-r4));
+ //alert("总数："+localStorage.getItem("cr") +"\n已完成：" +r4+"\n剩余：" +(localStorage.getItem("cr")-r4));
+  var crr=prompt("总数："+localStorage.getItem("cr") +"\n已完成：" +r4+"\n剩余：" +(localStorage.getItem("cr")-r4)+"\n输入总数");
+   if(crr!=null&&crr!=""){
+localStorage.setItem("cr",crr);}
 }
