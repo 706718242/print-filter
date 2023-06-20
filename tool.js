@@ -190,15 +190,15 @@ var i=[],j=[];
   
  }
 
-  for(var i =1 ;i<cells.length; i++) {
+  //for(var i =1 ;i<cells.length; i++) {
 
  
 //table.insertRow(0).innnrHTML = cells[i].innnrHTML;
   
- table.deleteRow(i);
+// table.deleteRow(i);
   
- table.insertRow(-1);
-   cells[i].innnrHTML=i[i];
+ //table.insertRow(-1);
+  // cells[i].innnrHTML=i[i];
 //cells[i].parentNode.insertBefore(cells[i], cells[1]);
 // 将最后一行移到第二行
   // cells[i].parentNode.insertBefore(cells[i], cells[1]);
@@ -207,7 +207,7 @@ var i=[],j=[];
   
    //i[i]=cells[i].innnrHTML;
   //j[i]=cells[i].innnrHTML; 
-  }
+ // }
   
  }
   
