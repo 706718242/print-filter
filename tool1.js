@@ -76,9 +76,10 @@ var tid;
  console.log(event.keyCode);
 
 
-if(event.keyCode!=13){
+if((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=65&&event.keyCode<=90)){
  //keys.push(event.key); 
- keys+=event.key;
+
+ keys+=event.key.toLowerCase();
                      }
  clearTimeout(tid);
 tid=setTimeout(function() {  keys=""; },1500);
